@@ -65,7 +65,8 @@ t.test(IT_Girls$Gehalt,IT_Bois$Gehalt, alternative = "two.sided")
 # h0 gleich
 
 wilcox.test(IT_Girls$Gehalt,IT_Bois$Gehalt, correct = F, ties.method = "average")
-
+wilcox.test(IT_Girls$Gehalt - IT_Bois$Gehalt, alternative = "less")
+wilcox.test(IT_Girls$Gehalt - IT_Bois$Gehalt, alternative = "greater")
 
 wilcoxPerHand(IT_Girls$Gehalt,IT_Bois$Gehalt)
 
