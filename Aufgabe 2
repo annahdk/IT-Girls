@@ -1,0 +1,71 @@
+######################### Aufgabe 2
+
+attach(IT)
+unique(Position)
+
+Jobs <- c("Data Engineer","Data Scientist","Data Analyst","DatabEngineer","Data Analyst ",
+          "Data Science Manager","Data Center Manager","Consultant Data Analytics",
+          "DB developer/Data analyst","Dana Analyst","Data architect",
+          "Student, Software Developer, Data Engineer")
+
+
+a <- 0
+for(k in 1:length(Jobs)){
+  for(l in 1:length(IT$Position)){
+    if(IT$Position[l] == Jobs[k]){
+      a <- a +1
+    }
+  }
+}
+  
+zwo <- data.frame(Geschlecht = rep(NA,153), Gehalt = numeric(153))
+j <- 0
+#for(j in 1:length(zwo)){
+for(i in 1:length(IT$Position)){
+  if(any(IT$Position[i] == Jobs)){
+
+    zwo[j,1] <- IT$Gender[i]
+    zwo[j,2] <- IT$Yearly.brutto.salary..without.bonus.and.stocks..in.EUR[i]
+    
+    j <- j+1
+    }
+  }
+#}
+
+IT_Girls <- na.omit(zwo[zwo$Geschlecht == "Female",])
+
+IT_Bois <- na.omit(zwo[zwo$Geschlecht == "Male",])
+
+sonst <- zwo[zwo$Geschlecht=="",]
+
+
+summary(IT_Girls$Gehalt)
+
+summary(IT_Bois$Gehalt)
+
+boxplot(IT_Girls$Gehalt,IT_Bois$Gehalt)
+
+ks <- density(IT_Girls$Gehalt)
+ks1 <- density(IT_Bois$Gehalt)
+
+plot(ks)
+lines(ks1)
+
+
+shapiro.test(IT_Girls$Gehalt)
+shapiro.test(IT_Bois$Gehalt)
+
+bartlett.test(list(IT_Girls$Gehalt,IT_Bois$Gehalt))
+
+t.test(IT_Girls$Gehalt,IT_Bois$Gehalt, alternative = "greater")
+# h0 kleiner gleich
+t.test(IT_Girls$Gehalt,IT_Bois$Gehalt, alternative = "less")
+# h0 groeßer gleich
+t.test(IT_Girls$Gehalt,IT_Bois$Gehalt, alternative = "two.sided")
+# h0 gleich
+
+wilcox.test(IT_Girls$Gehalt,IT_Bois$Gehalt, correct = F, ties.method = "average")
+
+
+wilcoxPerHand(IT_Girls$Gehalt,IT_Bois$Gehalt)
+
